@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+    <title>Favorite</title>
+    <link rel="icon" href="../img/core-img/favicon.ico">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/0ec45a6e18.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="/css/styleplayer.css" /> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<style>
+    body {
+        background: black;
+    }
+
+    .bg-header {
+        background: #171717;
+        height: 680px;
+    }
+
+    .pic-account {
+        height: 35px;
+        width: 35px;
+        transition: all .3s ease;
+        border-radius: 50%;
+    }
+
+    .suggested-new-tracks {
+        width: 95%;
+        height: auto;
+        /* border: 1px solid #fff; */
+        margin: auto;
+        margin-top: 2rem;
+        color: white;
+
+    }
+
+    .suggested-new-tracks .h3 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .suggested-new-tracks button {
+        color: white;
+        font-weight: bold;
+        background-color: #303030;
+        border: none;
+        border-radius: 12px;
+        width: 85px;
+        height: 25px;
+        font-size: 12px;
+    }
+
+
+    .suggested-new-tracks table {
+        margin-top: 1rem;
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+
+    }
+
+    .suggested-new-tracks table th:first-child {
+        width: 50px;
+    }
+
+    .suggested-new-tracks table th:nth-child(2) {
+        width: 320px;
+
+    }
+
+    .suggested-new-tracks table th:nth-child(3) {
+        width: 420px;
+    }
+
+    .suggested-new-tracks .table-song-type {
+        border-radius: 4px;
+        font-size: 12px;
+        color: #febd7d;
+        background-color: #332619;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-left: 8px;
+        padding-top: 1px;
+    }
+
+    .suggested-new-tracks table th:nth-child(4) {
+        width: 150px;
+
+    }
+
+    .suggested-new-tracks table th:nth-child(5) {
+        width: 150px;
+
+    }
+
+    .suggested-new-tracks table th:nth-child(6) {
+        width: auto;
+        text-align: right;
+    }
+
+
+    .suggested-new-tracks table td:nth-child(6) {
+        text-align: right;
+    }
+
+    .suggested-new-tracks table th {
+        text-align: left;
+        color: white;
+        font-size: 14px;
+        padding-bottom: 8px;
+        /* padding: 4px; */
+    }
+
+    .suggested-new-tracks table th,
+    td {
+        padding-right: 12px;
+        position: relative;
+    }
+
+    .suggested-new-tracks table tr td img {
+        position: relative;
+        top: 3px;
+        width: 50px;
+    }
+
+    .suggested-new-tracks table tr td .bi {
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+        font-size: 18px;
+        display: none;
+        transition: 0.1s ease-in;
+    }
+
+    .suggested-new-tracks tbody tr {
+        transition: 0.1s ease-in;
+    }
+
+    .suggested-new-tracks table tr:hover td .bi {
+        display: block;
+        cursor: pointer;
+    }
+
+
+    .table-title {
+        display: flex;
+        color: white;
+        width: 320px;
+    }
+
+    .suggested-new-tracks tbody tr:hover {
+        background-color: #2a2a2a;
+    }
+
+    .favorite {
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .favorite:hover {
+        scale: 1.2;
+        color: rgb(244, 35, 119);
+    }
+</style>
+
+<body ng-app="favApp" ng-controller="favCtrl">
+
+    <div class="container-fluid" style="font-family: Montserrat, sans-serif">
+        <!-- HEADER Ở ĐÂY -->
+        <div class="row">
+            <div style="
+                        background-color: #171717;
+                        display: flex;
+                        justify-content: space-around;
+                    " class="w-100 p-1 col-md-2 col-sm-4 mt-3">
+                <a href="/home/index" class="nav-brand"><img src="/img/core-img/logo.png" alt=""></a>
+            </div>
+            <nav class="navbar navbar-expand navbar-light col-md-10 topbar mb-9 static-top shadow"
+                style="background-color: #171717">
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <!-- <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2" />
+                            <div class="input-group-append">
+                                <button style="background-color: gray" class="btn" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div> -->
+                    </div>
+                </form>
+
+                <div class="col-md-2 col-sm-1">
+                    <p style="color: rgb(255, 255, 255); margin-top: 15px" class="name">
+                        <i class="fa-solid fa-user-astronaut" ng-if="!imagePath"></i>
+                        <img class="pic-account" ng-src="../asset/img/avatar/{{imagePath}}"
+                            ng-model="userLogged.avatarUrl" ng-if="imagePath" />
+                        &nbsp; {{userLogged.fullname}}
+                    </p>
+                </div>
+
+                <div class="col-md-2 col-sm-1">
+                    <a style="text-decoration: none; color: gray" href="/auth/logoff"><i
+                            class="fa-solid fa-right-from-bracket"></i>&nbsp;&nbsp;Logout</a>
+                </div>
+            </nav>
+        </div>
+        <div class="row">
+            <!-- MENU SIDE Ở ĐÂY -->
+            <div style="max-height: 100%" class="col-md-2 bg-header">
+                <ul style="
+                            list-style: none;
+                            margin-top: 20px;
+                            font-weight: bold;
+                        " class="d-flex flex-column">
+                    <li style="margin-top: 20px">
+                        <a style="color: white; font-size: 13.5px" href="/profile" class="nav-link">
+                            <i class="fa-solid fa-user-gear"></i>
+                            &nbsp;Profile Settings
+                        </a>
+                    </li>
+                    <!-- <li style="margin-top: 20px">
+                        <a style="color: white; font-size: 13.5px" href="../artist/index.html" class="nav-link">
+                            <i class="fa-solid fa-money"></i>
+                            &nbsp;&nbsp;Payment
+                        </a>
+                    </li> -->
+                    <!-- <li style="margin-top: 20px">
+                        <a style="color: white; font-size: 13.5px" href="../category/index.html" class="nav-link">
+                            <i class="fa-solid fa-list"></i>
+                            &nbsp;&nbsp;Playlist
+                        </a>
+                    </li> -->
+                    <li style="margin-top: 20px">
+                        <a style="color: white; font-size: 13.5px" href="/profile/favorite" class="nav-link">
+                            <i class="fa-solid fa-music"></i>
+                            &nbsp;&nbsp; Favorite
+                        </a>
+                    </li>
+                    <li style="margin-top: 20px">
+                        <a style="color: white; font-size: 13.5px" href="/changePassword" class="nav-link">
+                            <i class="fa-solid fa-key"></i>
+                            &nbsp;Change Password
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <main role="main" class="col-md-10 px-4;">
+                <!-- header -->
+                <div class="suggested-new-tracks">
+                    <div class="h3">
+                        <h3>My favorite songs</h3>
+                        <!-- <div class="btn_s">
+                            <button>VIEW ALL</button>
+                        </div> -->
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>NAME SONG</th>
+                                <th>ARTISTS</th>
+                                <th>GENRES</th>
+                                <th>TIME</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-songs-detail">
+                            <tr ng-repeat="songfull in fullsongsFav" id="table_fullsongs_{{songfull.song.id}}"
+                                class="song-row">
+                                <td ng-click="chooseSong(songfull.song)">
+                                    <img ng-src="/asset/img/song/{{songfull.song.image}}" alt="" />
+                                    <i class="bi fa-solid fa-circle-play"></i>
+                                </td>
+                                <td ng-click="chooseSong(songfull.song)">
+                                    <div class="table-title">
+                                        <div class="line-clamp">{{songfull.song.name}}</div>
+                                        <span class="table-song-type">MASTER</span>
+                                    </div>
+                                </td>
+                                <td ng-click="chooseSong(songfull.song)">
+                                    <span ng-repeat="singer in songfull.singers">
+                                        <span>{{$index < songfull.singers.length - 1 ? singer.name + '
+                                    - ' : singer.name}}</span>
+                                        </span>
+                                </td>
+                                <td ng-click="chooseSong(songfull.song)">
+                                    <span ng-repeat="genre in songfull.genres">
+                                        <span>{{$index < songfull.genres.length - 1 ? genre.name + ' -
+                                    ' : genre.name}}</span>
+                                        </span>
+                                </td>
+                                <td ng-click="chooseSong(songfull.song)">
+                                    <audio hidden id="{{songfull.song.id}}" controls>
+                                        <source src="{{songfull.song.path}}" type="audio/mpeg" />
+                                    </audio>
+
+                                    <span> {{songfull.song.duration}} </span>
+                                </td>
+                                <td>
+                                    <!-- <i class="fa-solid fa-plus" ng-click="playlistAddOn(songfull.song)"
+                                        data-toggle="modal" data-target="#exampleModalLong"></i>&nbsp;&nbsp; -->
+                                    <i class="favorite fa-regular fa-trash-alt" ng-click="favorite(songfull.song)">
+                                    </i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+
+        <!-- <div class="container col-12" style="height: 400px"></div> -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        </main>
+    </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/angular/favorite.js"></script>
+</body>
+
+</html>
+<!-- footer -->
